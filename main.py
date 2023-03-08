@@ -7,9 +7,10 @@ import random
 import string
 import threading
 import json as js
+import time
 
 # Option
-capmonster = 1
+capmonster = 0
 ref_code = 'aD4PQAWTQPgii1LqyQWw'
 number_of_threads = 1
 #--------------------
@@ -26,6 +27,12 @@ def main():
         account = w3.eth.account.create()
         address = account.address
         url = 'https://audience-consumer-api.zootools.co/v3/lists/aOfkJhcpwDHpJVkzO6FB/members'
+        if proxies_list == True:
+            proxies = {
+                'http': 'http://' + random.choice(proxies_list)
+            }
+        else:
+            proxies = None
 
         if capmonster == True:
             captchaToken = cap_get_token()
@@ -49,13 +56,19 @@ def main():
             'email': generate_random_string(15) + '@gmail.com',
             'referral': ref_code
         }
-        res = requests.post(url=url, headers=header, json=json)
-        jres = js.loads(res.text)
-        if jres['nextStep'] == 'confirmation':
-            print('+1 реф\n')
+        res = requests.post(url=url, headers=header, json=json, proxies=proxies)
+        if res.status_code == 200:
+            jres = js.loads(res.text)
+            if jres['nextStep'] == 'confirmation':
+                print('+1 реф\n')
+        else:
+            print('Отдохни 1 минуту')
+            time.sleep(60)
 
 
 if __name__ == '__main__':
+    with open("proxies.txt", "r") as f:
+        proxies_list = [row.strip() for row in f]
     for i in range(number_of_threads):
         thred = threading.Thread(target=main).start()
 
