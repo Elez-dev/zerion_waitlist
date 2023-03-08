@@ -11,3 +11,5 @@
 ref_code - ваш реф код
 
 number_of_threads - количество потоков
+
+Установка библиотек pip install -r requirements.txt
