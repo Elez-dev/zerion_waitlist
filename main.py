@@ -9,7 +9,7 @@ import threading
 import json as js
 
 # Option
-capmonster = 0
+capmonster = 1
 ref_code = 'aD4PQAWTQPgii1LqyQWw'
 number_of_threads = 1
 #--------------------
@@ -27,7 +27,7 @@ def main():
         address = account.address
         url = 'https://audience-consumer-api.zootools.co/v3/lists/aOfkJhcpwDHpJVkzO6FB/members'
 
-        if capmonster is True:
+        if capmonster == True:
             captchaToken = cap_get_token()
         else:
             captchaToken = ac_get_token()
