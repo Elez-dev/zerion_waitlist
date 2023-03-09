@@ -55,7 +55,11 @@ def main():
             'email': generate_random_string(15) + '@gmail.com',
             'referral': ref_code
         }
-        res = requests.post(url=url, headers=header, json=json, proxies=proxies)
+        try:
+            res = requests.post(url=url, headers=header, json=json, proxies=proxies)
+        except Exception:
+            print(Exception)
+            continue
         if res.status_code < 400:
             jres = js.loads(res.text)
             if jres['nextStep'] == 'confirmation':
