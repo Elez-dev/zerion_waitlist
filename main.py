@@ -12,7 +12,7 @@ import time
 # Option
 capmonster = 0
 ref_code = 'aD4PQAWTQPgii1LqyQWw'
-number_of_threads = 1
+number_of_threads = 5
 #--------------------
 
 
@@ -57,8 +57,8 @@ def main():
         }
         try:
             res = requests.post(url=url, headers=header, json=json, proxies=proxies)
-        except Exception:
-            print(Exception)
+        except Exception as ex:
+            print(ex)
             continue
         if res.status_code < 400:
             jres = js.loads(res.text)
