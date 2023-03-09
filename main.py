@@ -27,14 +27,13 @@ def main():
         account = w3.eth.account.create()
         address = account.address
         url = 'https://audience-consumer-api.zootools.co/v3/lists/aOfkJhcpwDHpJVkzO6FB/members'
-        if proxies_list == True:
+        if proxies_list:
             proxies = {
-                'http': 'http://' + random.choice(proxies_list)
+                'http': 'http://' + proxies_list.pop(0)
             }
         else:
             proxies = None
-
-        if capmonster == True:
+        if capmonster:
             captchaToken = cap_get_token()
         else:
             captchaToken = ac_get_token()
@@ -57,18 +56,19 @@ def main():
             'referral': ref_code
         }
         res = requests.post(url=url, headers=header, json=json, proxies=proxies)
-        if res.status_code == 200:
+        if res.status_code < 400:
             jres = js.loads(res.text)
             if jres['nextStep'] == 'confirmation':
                 print('+1 реф\n')
         else:
-            print('Отдохни 1 минуту')
-            time.sleep(60)
+            print('Слишком много запросов с одного ip')
+            time.sleep(20)
+            continue
 
 
 if __name__ == '__main__':
     with open("proxies.txt", "r") as f:
-        proxies_list = [row.strip() for row in f]
+        proxies_list = [row.strip() for row in f] * 100
     for i in range(number_of_threads):
-        thred = threading.Thread(target=main).start()
+        threading.Thread(target=main).start()
 
