@@ -26,7 +26,7 @@ def main():
     while True:
         account = w3.eth.account.create()
         address = account.address
-        url = 'https://audience-consumer-api.zootools.co/v3/lists/aOfkJhcpwDHpJVkzO6FB/members'
+        url = 'http://audience-consumer-api.zootools.co/v3/lists/aOfkJhcpwDHpJVkzO6FB/members'
         if proxies_list:
             proxies = {
                 'http': 'http://' + proxies_list.pop(0)
