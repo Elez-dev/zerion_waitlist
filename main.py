@@ -12,7 +12,7 @@ import time
 # Option
 capmonster = 0
 ref_code = 'aD4PQAWTQPgii1LqyQWw'
-number_of_threads = 5
+number_of_threads = 2
 #--------------------
 
 
@@ -27,12 +27,22 @@ def main():
         account = w3.eth.account.create()
         address = account.address
         url = 'http://audience-consumer-api.zootools.co/v3/lists/aOfkJhcpwDHpJVkzO6FB/members'
+        url1 = 'http://wtfismyip.com/text'
+        prx = proxies_list.pop(0)
         if proxies_list:
             proxies = {
-                'http': 'http://' + proxies_list.pop(0)
+                'http': 'http://' + prx
             }
         else:
             proxies = None
+
+        try:
+            res = requests.post(url=url1, proxies=proxies)
+            print(res.text)
+        except:
+            print('Этот прокси не рабочий - ' + prx + '\n')
+            continue
+
         if capmonster:
             captchaToken = cap_get_token()
         else:
