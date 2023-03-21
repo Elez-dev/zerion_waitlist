@@ -28,8 +28,8 @@ def main():
         address = account.address
         url = 'http://audience-consumer-api.zootools.co/v3/lists/aOfkJhcpwDHpJVkzO6FB/members'
         url1 = 'http://wtfismyip.com/text'
-        prx = proxies_list.pop(0)
         if proxies_list:
+            prx = proxies_list.pop(0)
             proxies = {
                 'http': 'http://' + prx
             }
